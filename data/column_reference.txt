@@ -1,9 +1,6 @@
 Dataset Columns:
-==================================================
 
 Total Columns: 66
-
-Dataset shape: (5000, 66)
 
 Columns List:
  1. vin
