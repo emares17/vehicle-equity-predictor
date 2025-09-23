@@ -2,5 +2,6 @@ data/raw/*.csv
 data/processed/*.csv
 
 .ipynb_checkpoints/
+/models/__pycache__
 
 .env
