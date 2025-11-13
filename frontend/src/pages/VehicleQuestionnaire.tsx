@@ -1,24 +1,32 @@
 import { ArrowLeft, Car, Info, Lock} from 'lucide-react';
 import { useVehicle } from "../context/VehicleDataContext";
 import { useNavigate } from "react-router-dom";
+import { Navigate } from 'react-router-dom';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
-import VehicleUserQuestionnaire from '../forms/VehicleUserQuestionnaire';
+import VehicleQuestionnaireForm from '../forms/VehicleQuestionnaireForm';
+
+/**
+ * Renders the vehicle questionnaire for the user.
+ * This page will display the questionnaire form and a brief vehicle summary.
+ * The user inputs from this page will create the payload sent to the backend to generate a prediction.
+ */
 
 export default function VehicleQuestionnaire() {
+  // Access and clear vehicle data
     const { vehicleData, clearVehicleData } = useVehicle();
     const navigate = useNavigate();
-
+    // Check if there is vehicle data, else navigate home.
     if (!vehicleData) {
-        navigate('/');
-        return null;
+      return <Navigate to="/" replace />;
     }
-
+    // Functionality for the back button, Clear vehicle data and navigate back home.
     const handleBackToVin = () => {
         clearVehicleData();
         navigate('/');
     };
 
+    //  Helper function to format string into title case.
     const changeToTitleCase = (str: string | undefined): string => {
         if (!str) return '';
 
@@ -43,15 +51,15 @@ export default function VehicleQuestionnaire() {
           </button>
           
           <h1 className="text-3xl font-normal text-gray-900 leading-9 mb-4">
-            Vehicle Details & Loan Information
+            Vehicle Questionnaire
           </h1>
           <p className="text-lg text-gray-600 leading-7">
-            Please provide the following information to calculate your vehicle equity projection
+            Please provide the following information to calculate your vehicle value projection
           </p>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
          
-          <VehicleUserQuestionnaire/>
+          <VehicleQuestionnaireForm/>
 
       
           <div className="space-y-6">
@@ -106,7 +114,7 @@ export default function VehicleQuestionnaire() {
               <ul className="space-y-2 text-xs text-gray-600">
                 <li>• Mileage affects depreciation rate</li>
                 <li>• Condition impacts current value</li>
-                <li>• Loan details calculate payoff timeline</li>
+                <li>• Exterior and interior color affect vehicle value</li>
                 <li>• Location affects regional market values</li>
               </ul>
             </div>

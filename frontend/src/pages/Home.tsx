@@ -1,9 +1,14 @@
 import Header from '../components/layout/Header'
 import Footer from '../components/layout/Footer'
-import { Lock, Clock, TrendingUp, Search, FileText, BarChart3 } from 'lucide-react';
+import { Search, FileText, BarChart3 } from 'lucide-react';
 import VinForm from '../forms/VinForm';
 
-export default function App() {
+/**
+ * Home page component that includes a header, footer, and the vin form.
+ * All functionality is in the VinForm component.
+ */
+
+export default function Home() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -14,42 +19,28 @@ export default function App() {
             <div className="text-center max-w-4xl mx-auto">
             
               <h1 className="text-4xl font-normal text-gray-900 leading-10 mb-6">
-                Discover Your Vehicle's Future Equity
+                Discover Your Vehicle's Future Value
               </h1>
               <p className="text-xl text-gray-600 leading-7 mb-4">
-                See your projected vehicle equity when your loan is paid off
+                See your projected vehicle value over a 5-year timeline
               </p>
               <p className="text-sm text-gray-500 leading-tight mb-12">
-                Enter your VIN to see your projected vehicle equity when your loan is paid off
+                Enter your VIN to see your projected vehicle value 
               </p>
               <div className="max-w-md mx-auto">
                 <VinForm/>
-                <div className="flex justify-center items-center space-x-8 text-sm text-gray-500">
-                  <div className="flex items-center">
-                    <Lock className="w-3.5 h-3.5 mr-2" />
-                    <span>Secure & Private</span>
-                  </div>
-                  <div className="flex items-center">
-                    <Clock className="w-3.5 h-3.5 mr-2" />
-                    <span>Results in 30 seconds</span>
-                  </div>
-                  <div className="flex items-center">
-                    <TrendingUp className="w-3.5 h-3.5 mr-2" />
-                    <span>Accurate Projections</span>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="bg-white py-16">
+        <div className="bg-white py-5">
           <div className="max-w-7xl mx-auto px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-normal text-gray-900 leading-9 mb-6">
-                How Vehicle Equity Calculator Works
+                How Vehicle Value Projections Works
               </h2>
               <p className="text-lg text-gray-600 leading-7">
-                Get accurate equity projections in three simple steps
+                Get accurate value projections in three simple steps
               </p>
             </div>
             
@@ -73,7 +64,7 @@ export default function App() {
                   2. Quick Details
                 </h3>
                 <p className="text-base text-gray-600 leading-normal">
-                  Answer a few quick questions about your loan balance, payments, mileage, and vehicle condition.
+                  Answer a few quick questions about your vehicle.
                 </p>
               </div>
           
@@ -85,7 +76,7 @@ export default function App() {
                   3. View Projections
                 </h3>
                 <p className="text-base text-gray-600 leading-normal">
-                  See your current equity and projected equity when your loan is paid off, with detailed timeline visualization.
+                  See your current and projected value with detailed timeline visualization.
                 </p>
               </div>
             </div>
@@ -95,13 +86,12 @@ export default function App() {
           <div className="max-w-6xl mx-auto px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-normal text-gray-900 leading-9">
-                Why Know Your Vehicle Equity?
+                Why Know Your Vehicle Value?
               </h2>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               <div className="bg-white rounded-lg border border-gray-200 p-6 text-center">
-                <div className="w-7 h-7 bg-gray-600 rounded mx-auto mb-4"></div>
                 <h3 className="text-xl font-normal text-gray-900 mb-4">
                   Smart Financial Planning
                 </h3>
@@ -111,12 +101,11 @@ export default function App() {
               </div>
               
               <div className="bg-white rounded-lg border border-gray-200 p-6 text-center">
-                <div className="w-9 h-7 bg-gray-600 rounded mx-auto mb-4"></div>
                 <h3 className="text-xl font-normal text-gray-900 mb-4">
                   Better Trade-in Timing
                 </h3>
                 <p className="text-base text-gray-600 leading-normal">
-                  Know the optimal time to trade in your vehicle to maximize your equity and minimize losses.
+                  Know the optimal time to trade in your vehicle to maximize your value and minimize losses.
                 </p>
               </div>
             </div>

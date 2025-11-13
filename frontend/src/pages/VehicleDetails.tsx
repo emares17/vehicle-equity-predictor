@@ -1,9 +1,15 @@
 import { Car } from 'lucide-react';
-import VehicleDetails from '../forms/VehicleDetailsForm';
+import VehicleDetailsForm from '../forms/VehicleDetailsForm';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 
-export default function App() {
+/**
+ * Displays the fetched vehicle details from the VIN entered by the user.
+ * Provides a summary of the next steps in the process.
+ * The functionality in this page is inside the VehicleDetailsForm component.
+ */
+
+export default function VehicleDetails() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -26,7 +32,7 @@ export default function App() {
               </p>
             </div>
             <div className="bg-gray-50 rounded-lg p-6 mb-8">
-             <VehicleDetails/>
+             <VehicleDetailsForm/>
              </div>
           </div>   
           <div className="bg-white rounded-lg border border-gray-200 p-6">
@@ -37,19 +43,13 @@ export default function App() {
                 <div className="w-6 h-6 bg-gray-600 rounded-full flex items-center justify-center mr-4">
                   <span className="text-white text-sm">2</span>
                 </div>
-                <span className="text-base text-gray-700">Provide loan and vehicle details</span>
+                <span className="text-base text-gray-700">Provide additional vehicle details</span>
               </div>
               <div className="flex items-center">
                 <div className="w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center mr-4">
                   <span className="text-gray-600 text-sm">3</span>
                 </div>
-                <span className="text-base text-gray-500">View your equity analysis</span>
-              </div>
-              <div className="flex items-center">
-                <div className="w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center mr-4">
-                  <span className="text-gray-600 text-sm">4</span>
-                </div>
-                <span className="text-base text-gray-500">Email results (optional)</span>
+                <span className="text-base text-gray-500">View your value prediction analysis</span>
               </div>
             </div>
           </div>

@@ -1,31 +1,32 @@
-import React, {useEffect, useRef} from "react"
+import {useEffect, useRef} from "react"
 import { Chart, registerables, Chart as ChartJS } from 'chart.js'
-import type { ChartOptions, TooltipItem } from 'chart.js'
-import { useLocation } from 'react-router-dom';
-import { useVehicle } from '../../../context/VehicleDataContext'
-import { useNavigate } from "react-router-dom";
+import type { ChartOptions } from 'chart.js'
+import type { PredictionData } from '../../../pages/VehicleResults'
 
-
+// Register the needed components for Chart.js
 Chart.register(...registerables);
 
-export default function EquityTimeline() {
+// Define the props for the component, which is the prediction data.
+interface ValueTimelineProps {
+    prediction: PredictionData;
+}
+
+export default function ValueTimeline({ prediction }: ValueTimelineProps) {
+    // Refs to hold the chart instance and the canvas element
     const chartRef = useRef<HTMLCanvasElement | null>(null);
     const chartInstanceRef = useRef<ChartJS | null>(null);
-    const { vehicleData, clearVehicleData } = useVehicle();
-    const location = useLocation();
-    const { prediction, userInputs, vehicleInfo } = location.state || {};
-    const navigate = useNavigate();
 
-    if (!vehicleData) {
-        navigate('/');
-        return null;
-    }
-
+    // Effect to create/update the chart when prediction data changes
     useEffect(() => {
+        // Needed check to ensure prediction and future_values exist
+        if(!prediction?.prediction_results?.future_values) return;
+
+        // Prepare the data for the chart
         const labels: string[] = ['Now', 'Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'];
         const future_value: number[] = [
-            prediction.data.current_value,
-            ...prediction.data.future_values.map((fv: { value: number }) => fv.value)
+            prediction.prediction_results.current_value,
+            // Extract the value from each future value entry
+            ...prediction.prediction_results.future_values.map((fv: { value: number }) => fv.value)
         ];
 
         if (chartRef.current) {
@@ -35,8 +36,7 @@ export default function EquityTimeline() {
             if (chartInstanceRef.current) {
                 chartInstanceRef.current.destroy();
             }
-
-            // Need to add data for loan balance once implemented
+            // Configure the chart data and options
             const chartData = {
                 labels: labels,
                 datasets: [
@@ -106,7 +106,7 @@ export default function EquityTimeline() {
                     }
                 }
             };
-
+            // Create the new chart instance
             chartInstanceRef.current = new Chart(ctx, {
                 type: 'line',
                 data: chartData,
@@ -114,7 +114,7 @@ export default function EquityTimeline() {
             });
 
         }
-
+        // When the component unmounts, this will ensure the chart instance is destroyed.
         return () => {
             if (chartInstanceRef.current) {
                 chartInstanceRef.current.destroy();
@@ -125,16 +125,8 @@ export default function EquityTimeline() {
     return (
         <div className="bg-white rounded-lg border border-gray-200 p-6">
             <div className="mb-6">
-                <h2 className="text-xl font-normal text-gray-900 mb-2">Equity Timeline</h2>
-                {userInputs.has_loan ? (
-                    <>
-                        <p className="text-sm text-gray-600">Vehicle depreciation vs remaining loan balance over time</p>
-                    </>
-                ) : (
-                    <>
-                        <p className="text-sm text-gray-600">Vehicle depreciation over time</p>
-                    </>
-                )}
+                <h2 className="text-xl font-normal text-gray-900 mb-2">Value Timeline</h2>
+                <p className="text-sm text-gray-600">Vehicle depreciation over time</p>
             </div>
             <div className="h-80 bg-gray-100 rounded-lg p-4">
                 <canvas ref={chartRef}></canvas>

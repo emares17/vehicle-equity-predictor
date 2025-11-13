@@ -1,25 +1,36 @@
 import { useVehicle } from "../context/VehicleDataContext";
 import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { CheckCircle, ArrowLeft, ArrowRight, Car } from 'lucide-react';
 
-export default function VehicleDetails() {
+/**
+ * Displays the vehicle details fetched from VIN entered by the user in the home page.
+ * Provides options to go back to VIN entry or continue to the vehicle questionnaire.
+ * If no vehicle data is present, redirects the user back to the home page.
+ */
+
+export default function VehicleDetailsForm() {
+    // Provide access to vehicle data context and navigation
     const { vehicleData, clearVehicleData } = useVehicle();
     const navigate = useNavigate();
 
+    // If no vehicle data, redirect to home page
     if (!vehicleData) {
-        navigate('/');
-        return null;
+        return <Navigate to="/" replace />;
     }
 
+    // Handler for return to home button, clear vehicle data and navigate.
     const handleBackToVin = (): void => {
         clearVehicleData();
         navigate('/');
     }
 
+    // Handler to continue to vehicle questionnaire page
     const handleContinue = (): void => {
       navigate('/vehicle-questionnaire');
     }
 
+    // Helper function to convert strings to Title Case
     const changeToTitleCase = (str: string | undefined): string => {
       if (!str) return '';
 
@@ -39,7 +50,7 @@ export default function VehicleDetails() {
                   <h2 className="text-2xl font-normal text-gray-900 leading-loose">
                     {vehicleData.year} {changeToTitleCase(vehicleData.make_name)} {changeToTitleCase(vehicleData.model_name)}
                   </h2>
-                  <p className="text-lg text-gray-600 leading-7">{changeToTitleCase(vehicleData.trim)} Trim</p>
+                  <p className="text-lg text-gray-600 leading-7">{changeToTitleCase(vehicleData.trim)}</p>
                 </div>
               </div>
 
@@ -75,7 +86,7 @@ export default function VehicleDetails() {
                     <span className="text-gray-800">{vehicleData.vin}</span>
                   </div>
                   <p className="text-xs text-gray-600 leading-none">
-                    Vehicle details have been automatically populated from our database
+                    Vehicle details have been automatically populated from the NHTSA database.
                   </p>
                 </div>
               </div>
@@ -92,7 +103,7 @@ export default function VehicleDetails() {
                 onClick={handleContinue}
                 className="flex-1 h-12 bg-gray-600 hover:bg-gray-700 text-white rounded-md flex items-center justify-center transition-colors duration-200"
               >
-                Continue to Details
+                Continue to Questionnaire
                 <ArrowRight className="w-3.5 h-4 ml-2" />
               </button>
             </div>

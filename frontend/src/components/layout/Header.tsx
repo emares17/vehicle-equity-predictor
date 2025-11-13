@@ -4,11 +4,7 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-8 h-full">
           <div className="flex items-center justify-between h-full">
             <div className="flex items-center space-x-3">
-              <div className="w-6 h-6 bg-gray-800 rounded"></div>
-              <div className="text-xl font-normal text-gray-800">VehicleEquity</div>
-            </div>
-            <div className="flex items-center space-x-12">
-              <div className="text-base text-gray-600 cursor-pointer hover:text-gray-900">How it Works</div>
+              <div className="text-xl font-normal text-gray-800">Vehicle Value Predictor</div>
             </div>
           </div>
         </div>
