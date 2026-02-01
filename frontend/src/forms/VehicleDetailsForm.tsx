@@ -41,81 +41,95 @@ export default function VehicleDetailsForm() {
 
     return (
        <>
-        <div className="bg-gray-50 rounded-lg p-6 mb-8">
-              <div className="flex items-center mb-6">
-                <div className="w-24 h-16 bg-gray-300 rounded-md flex items-center justify-center mr-8">
-                  <Car className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h2 className="text-2xl font-normal text-gray-900 leading-loose">
-                    {vehicleData.year} {changeToTitleCase(vehicleData.make_name)} {changeToTitleCase(vehicleData.model_name)}
-                  </h2>
-                  <p className="text-lg text-gray-600 leading-7">{changeToTitleCase(vehicleData.trim)}</p>
-                </div>
-              </div>
+        {/* Vehicle Header */}
+        <div className="mb-8">
+          <div className="flex items-center mb-6">
+            <div className="w-24 h-16 bg-gradient-to-br from-slate-700 to-slate-800 rounded-xl flex items-center justify-center mr-6 border border-slate-600/30">
+              <Car className="w-8 h-8 text-amber-400" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-white leading-tight">
+                {vehicleData.year} {changeToTitleCase(vehicleData.make_name)} {changeToTitleCase(vehicleData.model_name)}
+              </h2>
+              <p className="text-lg text-slate-400 mt-1">{changeToTitleCase(vehicleData.trim)}</p>
+            </div>
+          </div>
 
-              <div className="grid grid-cols-2 gap-8 border-t border-gray-200 pt-6">
-                <div className="space-y-6">
-                  <div>
-                    <div className="text-sm text-gray-500 mb-1">Year</div>
-                    <div className="text-lg text-gray-900 leading-7">{vehicleData.year}</div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-gray-500 mb-1">Make</div>
-                    <div className="text-lg text-gray-900 leading-7">{changeToTitleCase(vehicleData.make_name)}</div>
-                  </div>
-                </div>
-                <div className="space-y-6">
-                  <div>
-                    <div className="text-sm text-gray-500 mb-1">Model</div>
-                    <div className="text-lg text-gray-900 leading-7">{changeToTitleCase(vehicleData.model_name)}</div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-gray-500 mb-1">Trim</div>
-                    <div className="text-lg text-gray-900 leading-7">{changeToTitleCase(vehicleData.trim)}</div>
-                  </div>
-                </div>
+          {/* Vehicle Details Grid */}
+          <div className="grid grid-cols-2 gap-8 border-t border-slate-700/50 pt-6">
+            <div className="space-y-6">
+              <div>
+                <div className="text-sm text-slate-500 mb-1 uppercase tracking-wider">Year</div>
+                <div className="text-lg text-white font-medium">{vehicleData.year}</div>
+              </div>
+              <div>
+                <div className="text-sm text-slate-500 mb-1 uppercase tracking-wider">Make</div>
+                <div className="text-lg text-white font-medium">{changeToTitleCase(vehicleData.make_name)}</div>
               </div>
             </div>
-            <div className="bg-gray-50 rounded-lg border border-gray-200 p-4 mb-8">
-              <div className="flex items-start">
-                <CheckCircle className="w-4 h-4 text-gray-600 mt-1 mr-3 flex-shrink-0" />
-                <div>
-                  <div className="text-sm leading-tight mb-1">
-                    <span className="text-gray-800 font-bold">VIN Verified: </span>
-                    <span className="text-gray-800">{vehicleData.vin}</span>
-                  </div>
-                  <p className="text-xs text-gray-600 leading-none">
-                    Vehicle details have been automatically populated from the NHTSA database.
-                  </p>
-                </div>
+            <div className="space-y-6">
+              <div>
+                <div className="text-sm text-slate-500 mb-1 uppercase tracking-wider">Model</div>
+                <div className="text-lg text-white font-medium">{changeToTitleCase(vehicleData.model_name)}</div>
+              </div>
+              <div>
+                <div className="text-sm text-slate-500 mb-1 uppercase tracking-wider">Trim</div>
+                <div className="text-lg text-white font-medium">{changeToTitleCase(vehicleData.trim)}</div>
               </div>
             </div>
-            <div className="flex gap-4 mb-4">
-              <button
-                onClick={handleBackToVin}
-                className="flex-1 h-12 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md flex items-center justify-center transition-colors duration-200"
-              >
-                <ArrowLeft className="w-3.5 h-4 mr-2" />
-                Back to VIN Entry
-              </button>
-              <button
-                onClick={handleContinue}
-                className="flex-1 h-12 bg-gray-600 hover:bg-gray-700 text-white rounded-md flex items-center justify-center transition-colors duration-200"
-              >
-                Continue to Questionnaire
-                <ArrowRight className="w-3.5 h-4 ml-2" />
-              </button>
+          </div>
+        </div>
+
+        {/* VIN Verification Badge */}
+        <div className="bg-green-500/10 rounded-xl border border-green-500/20 p-4 mb-8">
+          <div className="flex items-start">
+            <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center mr-3 flex-shrink-0">
+              <CheckCircle className="w-5 h-5 text-green-400" />
             </div>
-            <div className="text-center">
-              <span className="text-sm text-gray-500">Wrong vehicle? </span>
-              <button
-                onClick={handleBackToVin}
-                className="text-sm text-gray-700 underline hover:text-gray-900"
-              >
-                Try a different VIN
-              </button>
-            </div> 
+            <div>
+              <div className="text-sm leading-tight mb-1">
+                <span className="text-green-400 font-bold">VIN Verified: </span>
+                <span className="text-green-300 font-mono">{vehicleData.vin}</span>
+              </div>
+              <p className="text-xs text-green-400/70 leading-relaxed">
+                Vehicle details have been automatically populated from the NHTSA database.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex gap-4 mb-6">
+          <button
+            onClick={handleBackToVin}
+            className="flex-1 h-12 bg-slate-700/50 hover:bg-slate-700 text-slate-300 rounded-xl flex items-center justify-center transition-all duration-200 border border-slate-600/30 hover:border-slate-500/50"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to VIN Entry
+          </button>
+          <button
+            onClick={handleContinue}
+            className="group flex-1 h-12 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-900 font-bold rounded-xl flex items-center justify-center transition-all duration-200 overflow-hidden relative shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40"
+          >
+            {/* Button shine effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+            <span className="relative z-10 flex items-center">
+              Continue to Questionnaire
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </span>
+          </button>
+        </div>
+
+        {/* Wrong Vehicle Link */}
+        <div className="text-center">
+          <span className="text-sm text-slate-500">Wrong vehicle? </span>
+          <button
+            onClick={handleBackToVin}
+            className="text-sm text-amber-400 hover:text-amber-300 underline underline-offset-2 transition-colors duration-200"
+          >
+            Try a different VIN
+          </button>
+        </div> 
       </>
     );
 }

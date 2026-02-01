@@ -2,6 +2,7 @@ import {useEffect, useRef} from "react"
 import { Chart, registerables, Chart as ChartJS } from 'chart.js'
 import type { ChartOptions } from 'chart.js'
 import type { PredictionData } from '../../../pages/VehicleResults'
+import { TrendingUp } from 'lucide-react';
 
 // Register the needed components for Chart.js
 Chart.register(...registerables);
@@ -36,19 +37,25 @@ export default function ValueTimeline({ prediction }: ValueTimelineProps) {
             if (chartInstanceRef.current) {
                 chartInstanceRef.current.destroy();
             }
-            // Configure the chart data and options
+            // Configure the chart data and options with dark theme colors
             const chartData = {
                 labels: labels,
                 datasets: [
                     {
-                        label: 'Current Value',
+                        label: 'Projected Value',
                         data: future_value,
-                        borderColor: 'rgb(75, 85, 99)',
-                        backgroundColor: 'rgba(70, 70, 70, 0.06)',
+                        borderColor: 'rgb(251, 191, 36)', // amber-400
+                        backgroundColor: 'rgba(251, 191, 36, 0.1)', // amber with transparency
                         fill: true,
                         tension: 0.4,
-                        pointRadius: 0,
-                        pointHoverRadius: 6,
+                        pointRadius: 4,
+                        pointHoverRadius: 8,
+                        pointBackgroundColor: 'rgb(251, 191, 36)',
+                        pointBorderColor: 'rgb(30, 41, 59)', // slate-800
+                        pointBorderWidth: 2,
+                        pointHoverBackgroundColor: 'rgb(251, 191, 36)',
+                        pointHoverBorderColor: 'rgb(251, 191, 36)',
+                        borderWidth: 3,
                     }
                 ]
             };
@@ -65,15 +72,31 @@ export default function ValueTimeline({ prediction }: ValueTimelineProps) {
                         beginAtZero: true,
                         ticks: {
                             callback: function(value) {
-                                return '$' + value;
+                                return '$' + value.toLocaleString();
+                            },
+                            color: 'rgb(148, 163, 184)', // slate-400
+                            font: {
+                                size: 12
                             }
                         },
                         grid: {
-                            color: 'rgba(200, 200, 200, 0.2)'
+                            color: 'rgba(71, 85, 105, 0.3)', // slate-600 with transparency
+                        },
+                        border: {
+                            display: false
                         }
                     },
                     x: {
+                        ticks: {
+                            color: 'rgb(148, 163, 184)', // slate-400
+                            font: {
+                                size: 12
+                            }
+                        },
                         grid: {
+                            display: false
+                        },
+                        border: {
                             display: false
                         }
                     }
@@ -84,13 +107,32 @@ export default function ValueTimeline({ prediction }: ValueTimelineProps) {
                         align: 'end',
                         labels: {
                             usePointStyle: true,
-                            boxWidth: 8
+                            boxWidth: 8,
+                            color: 'rgb(203, 213, 225)', // slate-300
+                            font: {
+                                size: 13,
+                            },
+                            padding: 15
                         }
                     },
                     tooltip: {
                         enabled: true,
                         mode: 'index',
                         intersect: false,
+                        backgroundColor: 'rgba(30, 41, 59, 0.95)', // slate-800
+                        titleColor: 'rgb(251, 191, 36)', // amber-400
+                        bodyColor: 'rgb(226, 232, 240)', // slate-200
+                        borderColor: 'rgba(251, 191, 36, 0.3)',
+                        borderWidth: 1,
+                        padding: 12,
+                        cornerRadius: 8,
+                        titleFont: {
+                            size: 14,
+                            weight: 'bold'
+                        },
+                        bodyFont: {
+                            size: 13
+                        },
                         callbacks: {
                             label: function(context) {
                                 let label = context.dataset.label || '';
@@ -123,12 +165,17 @@ export default function ValueTimeline({ prediction }: ValueTimelineProps) {
     }, [prediction]);
 
     return (
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-8">
             <div className="mb-6">
-                <h2 className="text-xl font-normal text-gray-900 mb-2">Value Timeline</h2>
-                <p className="text-sm text-gray-600">Vehicle depreciation over time</p>
+                <div className="flex items-center mb-2">
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center mr-3">
+                        <TrendingUp className="w-4 h-4 text-slate-900" />
+                    </div>
+                    <h2 className="text-xl font-bold text-white">Value Timeline</h2>
+                </div>
+                <p className="text-sm text-slate-400 ml-11">Vehicle depreciation over time</p>
             </div>
-            <div className="h-80 bg-gray-100 rounded-lg p-4">
+            <div className="h-80 bg-slate-900/50 rounded-xl p-6 border border-slate-700/30">
                 <canvas ref={chartRef}></canvas>
             </div>
         </div>

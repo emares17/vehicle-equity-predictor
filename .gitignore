@@ -12,4 +12,4 @@ backend/venv
 backend/models/saved/
 
 backend/setup.py
-.env
+backend/.env

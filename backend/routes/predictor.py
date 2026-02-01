@@ -3,9 +3,9 @@ import sys
 import os
 from datetime import datetime
 from database.predictions import insert_prediction, get_prediction_by_id 
+from huggingface_hub import hf_hub_download
+import pickle
 
-# Add root directory to Python path for imports
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from models.predictor import VehiclePredictor
 
 # Initialize Blueprint
@@ -13,7 +13,11 @@ prediction_bp = Blueprint('prediction', __name__)
 
 # Initialize predictor class and load the model from the specified path
 predictor = VehiclePredictor()
-MODEL_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'models', 'saved', 'vehicle_predictor_model_3m.pkl')
+
+MODEL_PATH = hf_hub_download(
+    repo_id='emares17/vehicle-value-predictor',
+    filename='vehicle_predictor_model_3m.pkl'
+)
 
 try:
     predictor.load(MODEL_PATH)

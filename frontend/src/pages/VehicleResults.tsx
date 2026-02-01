@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useVehicle } from "../context/VehicleDataContext";
 import { useNavigate } from "react-router-dom";
 import { Navigate } from 'react-router-dom';
+import { DollarSign, TrendingDown, Calendar, Sparkles } from 'lucide-react';
 
 // Defines the full prediction data fetched from the API, used in the ValueTimeline and VehicleKeyInsights components.
 export interface PredictionData {
@@ -82,60 +83,107 @@ export default function VehicleResults() {
   }
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-slate-950 flex flex-col">
       <Header/>
-      <div className="flex-1 bg-gray-50 py-12">
+      
+      <div className="flex-1 bg-slate-900 py-12">
         <div className="max-w-7xl mx-auto px-8">
-          <div className="flex justify-between items-start mb-12">
-            <div>
-              <h1 className="text-4xl font-normal text-gray-900 leading-tight mb-3">
-                    Your Vehicle Value Projection
-                  </h1>
-                  <p className="text-lg text-gray-600">
-                  {prediction?.vehicle_data.year} {changeToTitleCase(prediction?.vehicle_data.make_name)} {changeToTitleCase(prediction?.vehicle_data.model_name)} {changeToTitleCase(prediction?.vehicle_data.trim_name)}
-                  </p>
+          {/* Page Header */}
+          <div className="mb-12">
+            <div className="flex items-center mb-4">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center mr-3">
+                <Sparkles className="w-5 h-5 text-slate-900" />
+              </div>
+              <h1 className="text-4xl font-bold text-white leading-tight">
+                Your Vehicle Value Projection
+              </h1>
+            </div>
+            <p className="text-lg text-slate-400 ml-13">
+              {prediction?.vehicle_data.year} {changeToTitleCase(prediction?.vehicle_data.make_name)} {changeToTitleCase(prediction?.vehicle_data.model_name)} {changeToTitleCase(prediction?.vehicle_data.trim_name)}
+            </p>
+          </div>
+
+          {/* Value Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            {/* Current Value Card */}
+            <div className="relative group bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-8 text-center overflow-hidden hover:border-green-500/30 transition-all duration-300">
+              <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              
+              <div className="relative z-10">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center">
+                    <DollarSign className="w-6 h-6 text-green-400" />
+                  </div>
+                </div>
+                <div className="text-sm text-slate-400 uppercase tracking-wider mb-3 font-semibold">Current Value</div>
+                <div className="text-4xl font-bold text-white mb-3">
+                  ${formatCurrencyValues(prediction?.prediction_results.current_value)}
+                </div>
+                <div className="text-sm text-slate-500">As of {new Date().toLocaleDateString()}</div>
+              </div>
+            </div>
+
+            {/* Projected Value Card */}
+            <div className="relative group bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-8 text-center overflow-hidden hover:border-amber-500/30 transition-all duration-300">
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              
+              <div className="relative z-10">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 rounded-full bg-amber-500/10 flex items-center justify-center">
+                    <Calendar className="w-6 h-6 text-amber-400" />
+                  </div>
+                </div>
+                <div className="text-sm text-slate-400 uppercase tracking-wider mb-3 font-semibold">Projected Value (5 Years)</div>
+                <div className="text-4xl font-bold text-slate-300 mb-3">
+                  ${formatCurrencyValues(prediction?.prediction_results.future_values[4].value)}
+                </div>
+                <div className="text-sm text-slate-500">In 60 Months</div>
+              </div>
+            </div>
+
+            {/* Expected Depreciation Card */}
+            <div className="relative group bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-8 text-center overflow-hidden hover:border-red-500/30 transition-all duration-300">
+              <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              
+              <div className="relative z-10">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center">
+                    <TrendingDown className="w-6 h-6 text-red-400" />
+                  </div>
+                </div>
+                <div className="text-sm text-slate-400 uppercase tracking-wider mb-3 font-semibold">Expected Depreciation</div>
+                <div className="text-4xl font-bold text-white mb-3">
+                  -${formatCurrencyValues((prediction?.prediction_results.current_value - prediction?.prediction_results.future_values[4].value))}
+                </div>
+                <div className="text-sm text-slate-500">Over 60 months</div>
+              </div>
             </div>
           </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                  <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
-                    <div className="text-base text-gray-600 mb-3">Current Value</div>
-                    <div className="text-4xl font-normal text-gray-900 mb-3">
-                      ${formatCurrencyValues(prediction?.prediction_results.current_value)}
-                    </div>
-                    <div className="text-sm text-gray-500">As of {new Date().toLocaleDateString()}</div>
-                  </div>
 
-                  <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
-                    <div className="text-base text-gray-600 mb-3">Projected Value (5 Years)</div>
-                    <div className="text-4xl font-normal text-gray-600 mb-3">
-                      ${formatCurrencyValues(prediction?.prediction_results.future_values[4].value)}
-                    </div>
-                    <div className="text-sm text-gray-500">In 60 Months</div>
-                  </div>
-
-                  <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
-                    <div className="text-base text-gray-600 mb-3">Expected Depreciation</div>
-                    <div className="text-4xl font-normal text-gray-900 mb-3">
-                      -${formatCurrencyValues((prediction?.prediction_results.current_value - prediction?.prediction_results.future_values[4].value))}
-                    </div>
-                    <div className="text-sm text-gray-500">Over 60 months</div>
-                  </div>
-              </div>
+          {/* Timeline and Insights Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-            {prediction && <ValueTimeline prediction = {prediction}/>}
-
-            {prediction && <KeyInsights prediction = {prediction}/>}
+            {prediction && <ValueTimeline prediction={prediction}/>}
+            {prediction && <KeyInsights prediction={prediction}/>}
           </div>
+
+          {/* Action Button */}
           <div className="flex justify-end mb-4">
             <button
-                onClick={handleBackToVin}
-                className="px-6 h-12 bg-gray-600 hover:bg-gray-700 text-white rounded-md flex items-center justify-center transition-colors duration-200"
-              >
-                Generate New Prediction
+              onClick={handleBackToVin}
+              className="group relative px-8 h-14 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-900 font-bold rounded-xl flex items-center justify-center transition-all duration-300 overflow-hidden shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40"
+            >
+              {/* Button shine effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+              
+              <span className="relative z-10 flex items-center space-x-2">
+                <Sparkles className="w-5 h-5" />
+                <span>Generate New Prediction</span>
+              </span>
             </button>
           </div>
         </div>
       </div>
+      
       <Footer/>
     </div>
   );

@@ -1,4 +1,4 @@
-import { Car } from 'lucide-react';
+import { Car, CheckCircle2, ClipboardList, TrendingUp } from 'lucide-react';
 import VehicleDetailsForm from '../forms/VehicleDetailsForm';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
@@ -12,44 +12,68 @@ import Footer from '../components/layout/Footer';
 export default function VehicleDetails() {
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
-      <div className="w-full h-16 bg-white border-b border-gray-200">
-        <Header/>
-      </div>
+    <div className="min-h-screen bg-slate-950 flex flex-col">
+      <Header/>
 
-      <div className="flex-1 bg-gray-50 flex items-center justify-center py-16">
+      <div className="flex-1 bg-slate-900 flex items-center justify-center py-16">
         <div className="max-w-3xl mx-auto px-8 w-full">
-          <div className="bg-white rounded-lg border border-gray-200 p-8 mb-6">
+          {/* Main Card */}
+          <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-8 mb-6">
             <div className="text-center mb-12">
-              <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Car className="w-5 h-6 text-gray-600" />
+              {/* Success Icon */}
+              <div className="relative inline-block mb-6">
+                <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30">
+                  <CheckCircle2 className="w-10 h-10 text-white" />
+                </div>
+                <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-amber-500 rounded-full border-2 border-slate-800 flex items-center justify-center">
+                  <Car className="w-3 h-3 text-slate-900" />
+                </div>
               </div>
-              <h1 className="text-3xl font-normal text-gray-900 leading-9 mb-4">
+              
+              <h1 className="text-4xl font-bold text-white leading-tight mb-4">
                 We Found Your Vehicle!
               </h1>
-              <p className="text-lg text-gray-600 leading-7">
+              <p className="text-lg text-slate-400">
                 Please confirm the details below are correct
               </p>
             </div>
-            <div className="bg-gray-50 rounded-lg p-6 mb-8">
-             <VehicleDetailsForm/>
-             </div>
+            
+            {/* Vehicle Details Form */}
+            <div className="bg-slate-900/50 rounded-xl p-6 mb-8 border border-slate-700/30">
+              <VehicleDetailsForm/>
+            </div>
           </div>   
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h3 className="text-lg text-gray-900 mb-6">What's Next?</h3>
+          
+          {/* What's Next Card */}
+          <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-8">
+            <h3 className="text-xl font-bold text-white mb-6 flex items-center">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center mr-3">
+                <span className="text-slate-900 text-sm font-bold">→</span>
+              </div>
+              What's Next?
+            </h3>
             
             <div className="space-y-4">
-              <div className="flex items-center">
-                <div className="w-6 h-6 bg-gray-600 rounded-full flex items-center justify-center mr-4">
-                  <span className="text-white text-sm">2</span>
+              {/* Step 2 - Active */}
+              <div className="flex items-center p-4 bg-slate-700/30 rounded-xl border border-amber-500/30">
+                <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center mr-4 shadow-lg shadow-amber-500/20">
+                  <span className="text-slate-900 text-base font-bold">2</span>
                 </div>
-                <span className="text-base text-gray-700">Provide additional vehicle details</span>
+                <div className="flex-1 flex items-center justify-between">
+                  <span className="text-base text-white font-medium">Provide additional vehicle details</span>
+                  <ClipboardList className="w-5 h-5 text-amber-400" />
+                </div>
               </div>
-              <div className="flex items-center">
-                <div className="w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center mr-4">
-                  <span className="text-gray-600 text-sm">3</span>
+              
+              {/* Step 3 - Upcoming */}
+              <div className="flex items-center p-4 bg-slate-700/10 rounded-xl border border-slate-700/30">
+                <div className="w-10 h-10 bg-slate-700/50 rounded-full flex items-center justify-center mr-4">
+                  <span className="text-slate-400 text-base font-bold">3</span>
                 </div>
-                <span className="text-base text-gray-500">View your value prediction analysis</span>
+                <div className="flex-1 flex items-center justify-between">
+                  <span className="text-base text-slate-400">View your value prediction analysis</span>
+                  <TrendingUp className="w-5 h-5 text-slate-600" />
+                </div>
               </div>
             </div>
           </div>
