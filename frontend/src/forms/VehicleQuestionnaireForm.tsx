@@ -15,7 +15,7 @@ export default function VehicleQuestionnaireForm() {
   // State for form inputs, loading, and error handling
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-    const { vehicleData, clearVehicleData } = useVehicle();
+    const { vehicleData } = useVehicle();
     const navigate = useNavigate();
 
     // Redirect to home if no vehicle data is present in the context

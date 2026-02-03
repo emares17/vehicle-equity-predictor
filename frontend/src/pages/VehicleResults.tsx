@@ -53,6 +53,9 @@ export default function VehicleResults() {
     fetchPrediction();
   }, [id]);
 
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div className="error">{error}</div>;
+
    if (!vehicleData) {
         return <Navigate to="/" replace />;
     }
