@@ -35,13 +35,14 @@ export default function VehicleResults() {
   // Provide access to vehicle data context and navigation
   const { vehicleData, clearVehicleData } = useVehicle();
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 
   // This effect runs to fetch the prediction from the backend API.
   useEffect(() => {
     const fetchPrediction = async() => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/results/${id}`);
+        const response = await axios.get(`${API_URL}/api/results/${id}`);
         const data = response.data.data;
         setPrediction(data);
       } catch (error) {

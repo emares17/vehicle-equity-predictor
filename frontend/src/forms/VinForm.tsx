@@ -18,6 +18,7 @@ export default function VinForm() {
     const navigate = useNavigate();
     // Access to vehicle data context to set vehicle data after successful VIN lookup
     const { setVehicleData } = useVehicle();
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
     // Frontend validation for the VIN format, addidional validation is done in the backend.
     const validateVin = (vin: string): boolean => {
@@ -28,9 +29,8 @@ export default function VinForm() {
     // Async function to fetch data from the backend /api/vin-lookup endpoint, returns vehicle data or throws error.
     const fetchVinData = async(vin: string) => {
         try {
-            const response = await axios.post(
-                "http://localhost:5000/api/vin-lookup", {
-                    vin: vin
+            const response = await axios.post(`${API_URL}/api/vin-lookup`, {
+                vin: vin
             });
 
             // Handle unsuccessful responses if backend return 'success: false' in response
