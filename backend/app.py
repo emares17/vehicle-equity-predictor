@@ -3,13 +3,23 @@ from flask import Flask
 from flask_cors import CORS
 from dotenv import load_dotenv
 import os
+from config.config import DevelopmentConfig, ProductionConfig
 
 # Load environment variables from .env file
 load_dotenv()
 
-def create_app():
+def create_app(config_name = 'development'):
     # Creates and configures the Flask application
     app = Flask(__name__)
+
+    config_map = {
+        'development': DevelopmentConfig,
+        'production': ProductionConfig
+    }
+
+    config_class = config_map.get(config_name, DevelopmentConfig)
+    app.config.from_object(config_class)
+
     # Enable CORS to allow requests from the frontend
     CORS(app)
 
@@ -33,6 +43,25 @@ def create_app():
 
     return app
 
+app = create_app(os.getenv('FLASK_ENV', 'production'))
+
 if __name__ == '__main__':
+    env = os.getenv('FLASK_ENV', 'development')
     app = create_app()
-    app.run(debug = True, port = 5000)
+
+    port_env = os.environ.get('PORT')
+    port = int(port_env) if port_env else 5000
+
+    if env == 'production':
+        # Production settings
+        app.run(
+            host='0.0.0.0',
+            port=port,
+            debug=False
+        )
+    else:
+        app.run(
+            host='0.0.0.0',  
+            port=port,
+            debug=True
+        )
